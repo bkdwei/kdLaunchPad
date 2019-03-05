@@ -69,7 +69,12 @@ class launchSession(QWidget):
         for i in range(self.model.rowCount()):
             cmd = self.model.item(i).data()
             print(self.model.item(i).data())
-            os.system(cmd + " &")
+            if os.name == "nt":
+                os.startfile(cmd)
+            elif os.name == "posix":
+                os.system(cmd + " &")
+            print(os.name)
+        sys.exit(0)
         
     def myListWidgetContext(self):
         action = self.popMenu.exec_(self.bold,QCursor.pos())
