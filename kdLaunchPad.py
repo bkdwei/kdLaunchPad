@@ -8,14 +8,17 @@ Created on 2019年3月3日
 from PyQt5.uic import loadUi
 import os
 import sys
+import json
 
 from PyQt5.Qt import QMainWindow
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QCursor, QIcon
-from PyQt5.QtWidgets import  QApplication, QFileDialog,  QGraphicsOpacityEffect, QAction, QMenu, QInputDialog, QLineEdit
+from PyQt5.QtWidgets import  QApplication, QFileDialog,  QGraphicsOpacityEffect, QAction, QMenu, QInputDialog, QLineEdit,QMessageBox
 
 import kdconfigutil
+import kdconfig
 from launchSession import launchSession
+import fileutil
 
 
 class kdLaunchPad(QMainWindow):
@@ -38,7 +41,7 @@ class kdLaunchPad(QMainWindow):
         self.setGraphicsEffect(opacity_effect)
         
         self.pop_menu = QMenu()
-        self.pop_menu_item = [QAction("新增会话"),QAction("设置背景"),QAction("退出")]
+        self.pop_menu_item = [QAction("新增会话"),QAction("设置背景"),QAction("导出配置"),QAction("导入配置"),QAction("退出")]
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested[QPoint].connect(self.handle_pop_menu)
         
@@ -113,6 +116,30 @@ class kdLaunchPad(QMainWindow):
                     self.set_background_image(filename)
             elif action_text == "退出" :
                 self.close()
+            elif action_text == "导出配置" :
+                filename, _ = QFileDialog.getSaveFileName(self,
+                            "选择配置文件保存位置",
+                            os.path.expanduser('~') , 
+                            "配置文件(*.json);;")   #设置文件扩展名过滤,注意用双分号间隔
+                if filename:
+                        fileutil.check_and_create(filename)
+                        with open(filename, "w") as f:
+                            f.write(json.dumps(self.confs,ensure_ascii=False))
+                            f.flush()
+                            QMessageBox.information(self, "导出配置","导出配置成功", QMessageBox.Yes)
+            elif action_text == "导入配置" :
+                filename, _ = QFileDialog.getOpenFileName(self,
+                            "选择配置文件",
+                            os.path.expanduser('~') , 
+                            "*.json(*.json)")   #设置文件扩展名过滤,注意用双分号间隔
+                if filename:
+                    with open(filename,"r") as f :
+                        config_content = f.read().strip()
+                        if config_content != "" :
+                            with open(kdconfig.config_file, "w") as fw:
+                                fw.write(config_content)
+                                fw.flush()
+                                QMessageBox.information(self, "导入配置", "导入配置成功\n重新后将使用新的配置", QMessageBox.Yes)
                 
     def alter_session_name(self,old_session_name,new_session_name):
         for conf in self.confs:
