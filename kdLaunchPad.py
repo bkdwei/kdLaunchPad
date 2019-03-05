@@ -22,8 +22,8 @@ class kdLaunchPad(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        loadUi(sys.path[0] +"/kdLaunchPad.ui", self)
-        self.setWindowIcon(QIcon(sys.path[0] +'/image/logo.ico'))
+        loadUi(os.path.join(os.getcwd(), "kdLaunchPad.ui"), self)
+        self.setWindowIcon(QIcon(os.path.join(os.getcwd(),'image/logo.ico')))
         
         self.confs = kdconfigutil.init_conf()
         print(self.confs)
@@ -31,6 +31,8 @@ class kdLaunchPad(QMainWindow):
         self.col = 0
         if self.confs:
             self.init_menu(self.confs)
+        else :
+            self.confs = []
         opacity_effect = QGraphicsOpacityEffect(self)
         opacity_effect.setOpacity(0.95)
         self.setGraphicsEffect(opacity_effect)
@@ -40,7 +42,7 @@ class kdLaunchPad(QMainWindow):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested[QPoint].connect(self.handle_pop_menu)
         
-        self.set_background_image(sys.path[0] +"/image/background.jpg")
+        self.set_background_image("image/background.jpg")
         
     def init_menu(self,confs):
         for conf in confs:
@@ -85,9 +87,13 @@ class kdLaunchPad(QMainWindow):
                 value, ok = QInputDialog.getText(self, "会话标题", "请输入会话标题:", QLineEdit.Normal)
                 if ok:
                     ls = launchSession()
+                    ls.session_name = value
                     ls.lb_session_name.setText(value)
+                    ls.lv_session.setObjectName(value)
                     ls.add_item_signal.connect(self.add_session_item)
                     ls.del_item_signal.connect(self.del_session_item)
+                    ls.alter_session_signal.connect(self.alter_session_name)
+                    ls.del_session_signal.connect(self.del_session)
                     self.gridLayout.addWidget(ls,self.row,self.col)
                     self.col += 1
                     if self.col >= 3:
@@ -100,7 +106,7 @@ class kdLaunchPad(QMainWindow):
             elif action_text == "设置背景":
                 filename, _ = QFileDialog.getOpenFileName(self,
                             "选择背景文件",
-                            os.environ["HOME"],
+                            os.path.expanduser('~') , 
                             "(*.jpg);;(*.png)")   #设置文件扩展名过滤,注意用双分号间隔
                 if filename:
                     print(filename)
@@ -127,9 +133,10 @@ class kdLaunchPad(QMainWindow):
                
     def set_background_image(self,filename):
         self.setStyleSheet("#MainWindow{border-image:url("+filename +");}")
-        if filename != sys.path[0] +"/image/background.jpg":
+        print(filename)
+        if os.path.basename(filename) != "background.jpg":
             with open(filename,"rb") as new_background:
-                with open(sys.path[0] +"/image/background.jpg","wb") as old_background:
+                with open(os.path.join(os.getcwd(),"image/background.jpg"),"wb") as old_background:
                     old_background.write(new_background.read())
 
 if __name__ == '__main__':

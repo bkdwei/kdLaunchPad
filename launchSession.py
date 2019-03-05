@@ -37,6 +37,11 @@ class launchSession(QWidget):
         self.lb_session_name.setContextMenuPolicy(Qt.CustomContextMenu)
         self.lb_session_name.customContextMenuRequested[QPoint].connect(self.handle_lb_session_name_pop_menu)
         
+        self.model = QStandardItemModel()
+        self.lv_session.setSizePolicy(self.maxSize)
+        self.lv_session.setModel(self.model)
+        self.lv_session.setViewMode(QListView.ListMode)
+        self.lv_session.clicked.connect(self.on_item_changed)
 
     def init_session(self,conf):
         session_name = conf["session_name"]
@@ -44,20 +49,14 @@ class launchSession(QWidget):
         session_list = conf["session_list"]
         self.lb_session_name.setText(session_name)
         self.lv_session.setObjectName(session_name)
-        self.lv_session.setSizePolicy(self.maxSize)
         print("add new session," + session_name)
 
-        self.model = QStandardItemModel()
         if session_list:
             for session_list_item in session_list:
                 standard_item = QStandardItem(session_list_item["name"])
                 standard_item.setData(session_list_item["cmd"])
                 self.model.appendRow(standard_item)
 #                 self.lv_session.addItem(session_list_item["name"])
-            self.lv_session.setModel(self.model)
-            self.lv_session.setViewMode(QListView.ListMode)
-            self.lv_session.clicked.connect(self.on_item_changed)
-            self.lv_session.setSizePolicy(self.maxSize)
     @pyqtSlot()
     def on_item_changed(self):
         cur_index = self.lv_session.currentIndex()
@@ -84,6 +83,9 @@ class launchSession(QWidget):
                     standard_item = QStandardItem(self.s.le_name.text())
                     standard_item.setData(self.s.le_cmd.text())
                     self.model.appendRow(standard_item)
+#                     self.model.insertRow(self.model.rowCount(),standard_item)
+#                     standard_item.setEnabled(True)
+#                     self.lv_session.setVisible(True)
                     
                     session_item = {"name":self.s.le_name.text(),"cmd":self.s.le_cmd.text(),"session_name":self.session_name}
                     self.add_item_signal.emit(session_item)

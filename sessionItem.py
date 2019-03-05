@@ -23,7 +23,7 @@ class sessionItem(QDialog):
     def on_pb_open_file_clicked(self):
         filename, _ = QFileDialog.getOpenFileName(self,
                                     "选择文件",
-                                    os.environ["HOME"],
+                                    os.path.expanduser('~') ,
                                     "All Files (*)")   #设置文件扩展名过滤,注意用双分号间隔
         if filename:
             print(filename)
