@@ -41,7 +41,9 @@ class launchSession(QWidget):
         self.lv_session.setSizePolicy(self.maxSize)
         self.lv_session.setModel(self.model)
         self.lv_session.setViewMode(QListView.ListMode)
-        self.lv_session.clicked.connect(self.on_item_changed)
+        self.lv_session.doubleClicked.connect(self.on_item_doubleClicked)
+        
+        self.last_path = os.path.expanduser('~')
 
     def init_session(self,conf):
         session_name = conf["session_name"]
@@ -55,44 +57,49 @@ class launchSession(QWidget):
             for session_list_item in session_list:
                 standard_item = QStandardItem(session_list_item["name"])
                 standard_item.setData(session_list_item["cmd"])
+                standard_item.setEditable(False)
                 self.model.appendRow(standard_item)
 #                 self.lv_session.addItem(session_list_item["name"])
     @pyqtSlot()
-    def on_item_changed(self):
+    def on_item_doubleClicked(self):
         cur_index = self.lv_session.currentIndex()
-        print(self.model.item(cur_index.row(), 0).data())
-#         print(dir(qModelIndex))
-#         print(qModelIndex.row())
+        cmd = self.model.item(cur_index.row(), 0).data()
+        print(cmd)
+        self.run_cmd(cmd)
     @pyqtSlot()
     def on_pb_launch_clicked(self):
         print("get",self.model.rowCount())
         for i in range(self.model.rowCount()):
             cmd = self.model.item(i).data()
             print(self.model.item(i).data())
-            if os.name == "nt":
-                os.startfile(cmd)
-            elif os.name == "posix":
-                os.system(cmd + " &")
-            print(os.name)
+            self.run_cmd(cmd)
         sys.exit(0)
         
+    def run_cmd(self,cmd):
+        if os.name == "nt":
+            os.startfile(cmd)
+        elif os.name == "posix":
+            os.system(cmd + " &")
+        print(os.name)
     def myListWidgetContext(self):
         action = self.popMenu.exec_(self.bold,QCursor.pos())
         if action:
             action_text = action.text()
             print(action_text)
             if action_text == "新增" :
-                self.s = sessionItem()
+                self.s = sessionItem(self.last_path)
                 if self.s.exec_():
                     print(self.s.le_name.text())
                     standard_item = QStandardItem(self.s.le_name.text())
                     standard_item.setData(self.s.le_cmd.text())
+                    standard_item.setEditable(False)
                     self.model.appendRow(standard_item)
 #                     self.model.insertRow(self.model.rowCount(),standard_item)
 #                     standard_item.setEnabled(True)
 #                     self.lv_session.setVisible(True)
                     
                     session_item = {"name":self.s.le_name.text(),"cmd":self.s.le_cmd.text(),"session_name":self.session_name}
+                    self.last_path = self.s.le_cmd.text()
                     self.add_item_signal.emit(session_item)
             elif action_text == "删除" :
                 cur_index = self.lv_session.currentIndex()

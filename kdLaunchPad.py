@@ -38,7 +38,7 @@ class kdLaunchPad(QMainWindow):
         self.setGraphicsEffect(opacity_effect)
         
         self.pop_menu = QMenu()
-        self.pop_menu_item = [QAction("新增会话"),QAction("设置背景")]
+        self.pop_menu_item = [QAction("新增会话"),QAction("设置背景"),QAction("退出")]
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested[QPoint].connect(self.handle_pop_menu)
         
@@ -111,6 +111,8 @@ class kdLaunchPad(QMainWindow):
                 if filename:
                     print(filename)
                     self.set_background_image(filename)
+            elif action_text == "退出" :
+                self.close()
                 
     def alter_session_name(self,old_session_name,new_session_name):
         for conf in self.confs:
@@ -139,6 +141,13 @@ class kdLaunchPad(QMainWindow):
                 with open(os.path.join(os.getcwd(),"image/background.jpg"),"wb") as old_background:
                     old_background.write(new_background.read())
 
+    def keyPressEvent(self, event):
+        curKey = event.key()
+        print("按下：" + str(event.key()))
+        if curKey == Qt.Key_Escape or curKey == Qt.Key_F4:
+            self.close()
+        elif curKey == Qt.Key_F11:
+            self.showNormal()
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = kdLaunchPad()
