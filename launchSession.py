@@ -24,7 +24,7 @@ class launchSession(QWidget):
     
     def __init__(self):
         super().__init__()
-        loadUi(sys.path[0] +"/launchSession.ui", self)
+        loadUi(os.path.join(os.getcwd(),"launchSession.ui"), self)
         self.maxSize = QSizePolicy(QSizePolicy.Maximum,QSizePolicy.Maximum)
         
         self.popMenu = QMenu()

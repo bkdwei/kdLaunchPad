@@ -5,7 +5,6 @@ Created on 2019年3月3日
 @author: bkd
 '''
 
-import sys
 import os
 
 from PyQt5.uic import loadUi
@@ -15,7 +14,7 @@ from PyQt5.QtWidgets import QDialog,QFileDialog
 class sessionItem(QDialog):
     def __init__(self):
         super().__init__()
-        loadUi(sys.path[0] +"/sessionItem.ui", self)
+        loadUi(os.path.join(os.getcwd(),"sessionItem.ui"), self)
         print("sessionItem init")
 #         self.show()
     
