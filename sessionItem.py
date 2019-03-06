@@ -10,11 +10,12 @@ import os
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog,QFileDialog
+from fileutil import get_file_realpath
 
 class sessionItem(QDialog):
     def __init__(self,last_path = None):
         super().__init__()
-        loadUi(os.path.join(os.getcwd(),"sessionItem.ui"), self)
+        loadUi(get_file_realpath("sessionItem.ui"), self)
         self.last_path = last_path
         print("sessionItem init")
     

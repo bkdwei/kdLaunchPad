@@ -18,15 +18,16 @@ from PyQt5.QtWidgets import  QApplication, QFileDialog,  QGraphicsOpacityEffect,
 import kdconfigutil
 import kdconfig
 from launchSession import launchSession
-import fileutil
+from fileutil import  check_and_create,get_file_realpath
 
 
 class kdLaunchPad(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        loadUi(os.path.join(os.getcwd(), "kdLaunchPad.ui"), self)
-        self.setWindowIcon(QIcon(os.path.join(os.getcwd(),'image/logo.ico')))
+        print(os.path.realpath(__file__))
+        loadUi(get_file_realpath("kdLaunchPad.ui"), self)
+        self.setWindowIcon(QIcon(get_file_realpath('image/logo.ico')))
         
         self.confs = kdconfigutil.init_conf()
         print(self.confs)
@@ -45,7 +46,7 @@ class kdLaunchPad(QMainWindow):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested[QPoint].connect(self.handle_pop_menu)
         
-        self.set_background_image("image/background.jpg")
+        self.set_background_image(get_file_realpath("image/background.jpg"))
         
     def init_menu(self,confs):
         for conf in confs:
@@ -122,7 +123,7 @@ class kdLaunchPad(QMainWindow):
                             os.path.expanduser('~') , 
                             "配置文件(*.json);;")   #设置文件扩展名过滤,注意用双分号间隔
                 if filename:
-                        fileutil.check_and_create(filename)
+                        check_and_create(filename)
                         with open(filename, "w") as f:
                             f.write(json.dumps(self.confs,ensure_ascii=False))
                             f.flush()
@@ -165,13 +166,15 @@ class kdLaunchPad(QMainWindow):
         print(filename)
         if os.path.basename(filename) != "background.jpg":
             with open(filename,"rb") as new_background:
-                with open(os.path.join(os.getcwd(),"image/background.jpg"),"wb") as old_background:
+                with open(get_file_realpath("image/background.jpg"),"wb") as old_background:
                     old_background.write(new_background.read())
 
     def keyPressEvent(self, event):
         curKey = event.key()
         print("按下：" + str(event.key()))
-        if curKey == Qt.Key_Escape or curKey == Qt.Key_F4:
+        if curKey == Qt.Key_Escape :
+            self.showNormal()
+        elif curKey == Qt.Key_F4:
             self.close()
         elif curKey == Qt.Key_F11:
             self.showNormal()

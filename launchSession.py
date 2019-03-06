@@ -5,7 +5,6 @@ Created on 2019年3月3日
 @author: bkd
 '''
 
-from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
 import sys
 import os
@@ -14,6 +13,7 @@ from PyQt5.QtCore import pyqtSlot,Qt,QPoint,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QListView,QSizePolicy,QAction,QMenu,QInputDialog,QLineEdit
 from PyQt5.QtGui import QStandardItem,QStandardItemModel,QCursor
 from sessionItem import sessionItem
+from fileutil import get_file_realpath
 
 
 class launchSession(QWidget):
@@ -24,7 +24,7 @@ class launchSession(QWidget):
     
     def __init__(self):
         super().__init__()
-        loadUi(os.path.join(os.getcwd(),"launchSession.ui"), self)
+        loadUi(get_file_realpath("launchSession.ui"), self)
         self.maxSize = QSizePolicy(QSizePolicy.Maximum,QSizePolicy.Maximum)
         
         self.popMenu = QMenu()
@@ -122,9 +122,3 @@ class launchSession(QWidget):
             elif action_text == "删除会话":
                 self.del_session_signal.emit(self.session_name)
                 self.close()
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    win = launchSession()
-    win.show()
-    sys.exit(app.exec_())
