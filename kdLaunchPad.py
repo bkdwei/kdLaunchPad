@@ -46,7 +46,7 @@ class kdLaunchPad(QMainWindow):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested[QPoint].connect(self.handle_pop_menu)
         
-        self.set_background_image(get_file_realpath("image/background.jpg"))
+        self.set_background_image(get_file_realpath("image/background.jpg").replace("\\","/"))
         
     def init_menu(self,confs):
         for conf in confs:
