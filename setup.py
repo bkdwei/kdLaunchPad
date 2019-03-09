@@ -2,7 +2,13 @@
 #-*- coding:utf-8 -*-
 
 from setuptools import setup, find_packages
+import os
 
+desktop_path = os.path.join(os.path.expanduser("~"),"Desktop/kdLaunchPad.bat")
+if os.name == 'nt':
+    with open(desktop_path,"w",encoding="utf-8") as shotcut:
+        shotcut.write(("echo hi").encode(coding="utf-8"))
+        
 with open("kdLaunchPad/README.md", "r",encoding="utf-8") as fh:
     long_description = fh.read()
 
