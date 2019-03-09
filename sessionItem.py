@@ -10,7 +10,7 @@ import os
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog,QFileDialog
-from fileutil import get_file_realpath
+from kdLaunchPad.fileutil import get_file_realpath
 
 class sessionItem(QDialog):
     def __init__(self,last_path = None):

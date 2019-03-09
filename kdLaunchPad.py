@@ -15,10 +15,10 @@ from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QCursor, QIcon
 from PyQt5.QtWidgets import  QApplication, QFileDialog,  QGraphicsOpacityEffect, QAction, QMenu, QInputDialog, QLineEdit,QMessageBox
 
-import kdconfigutil
-import kdconfig
-from launchSession import launchSession
-from fileutil import  check_and_create,get_file_realpath
+from kdLaunchPad import kdconfigutil
+from kdLaunchPad import kdconfig
+from kdLaunchPad.launchSession import launchSession
+from kdLaunchPad.fileutil import  check_and_create,get_file_realpath
 
 
 class kdLaunchPad(QMainWindow):
@@ -178,10 +178,12 @@ class kdLaunchPad(QMainWindow):
             self.close()
         elif curKey == Qt.Key_F11:
             self.showNormal()
-if __name__ == '__main__':
+def main():
     app = QApplication(sys.argv)
     win = kdLaunchPad()
     win.showFullScreen()
 #     win.setWindowOpacity(0.9)
 #     win.show()
-    sys.exit(app.exec_())        
+    sys.exit(app.exec_())
+if __name__ == '__main__':
+    main()

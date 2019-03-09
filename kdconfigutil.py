@@ -1,8 +1,8 @@
 # coding: utf-8
 
 import json
-from fileutil import check_and_create
-import kdconfig
+from kdLaunchPad.fileutil import check_and_create
+from kdLaunchPad import kdconfig
 
 
 def init_conf():

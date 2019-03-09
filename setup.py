@@ -18,16 +18,16 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/bkdwei/kdLaunchPad",
     license="GPLv3+",
-    platforms="any",
-    data_files="",
+    platforms=["Windows", "Linux"],
     # 需要安装的依赖
     install_requires=["PyQt5"],
     packages=find_packages(),
-    
+    package_data={"":["*","image/*"],},
+    zip_safe=False,
+
 #     可变部分
     description="auto run some programs after system start",
     keywords=("kdLaunchPad","autoStarter"),
-    package_data={"kdLaunchPad":["./*.ui","./README.md","./LICENSE"],},
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Environment :: X11 Applications :: Qt",
