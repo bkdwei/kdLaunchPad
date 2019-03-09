@@ -2,12 +2,6 @@
 #-*- coding:utf-8 -*-
 
 from setuptools import setup, find_packages
-import os
-
-desktop_path = os.path.join(os.path.expanduser("~"),"Desktop/kdLaunchPad.bat")
-if os.name == 'nt':
-    with open(desktop_path,"w",encoding="utf-8") as shotcut:
-        shotcut.write(("echo hi").encode(coding="utf-8"))
         
 with open("kdLaunchPad/README.md", "r",encoding="utf-8") as fh:
     long_description = fh.read()
@@ -15,7 +9,7 @@ with open("kdLaunchPad/README.md", "r",encoding="utf-8") as fh:
 setup(
 #     固定部分
     name="kdLaunchPad",
-    version="1.0.3",
+    version="1.0.2",
     author="bkdwei",
     author_email="bkdwei@163.com",
     maintainer="韦坤东",
@@ -25,17 +19,19 @@ setup(
     url="https://github.com/bkdwei/kdLaunchPad",
     license="GPLv3+",
     platforms=["Windows", "Linux"],
-    # 需要安装的依赖
-    install_requires=["PyQt5"],
+#     需要安装的依赖
+    install_requires=["PyQt5","shortcutter"],
     packages=find_packages(),
-    package_data={"":["*","image/*"],},
     zip_safe=False,
+    include_package_data=True,
 
 #     可变部分
     description="auto run some programs after system start",
     keywords=("kdLaunchPad","autoStarter"),
+#     package_data={"":["*","image/*"],},
+#     data_files=[('/usr/share/applications', ['data/kdLaunchPad.desktop'])],
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: X11 Applications :: Qt",
         "Intended Audience :: Developers",
         "Natural Language :: Chinese (Simplified)",
@@ -54,3 +50,8 @@ setup(
         ],    
     }
 )
+print("正在使用shortcutter创建快捷方式和开始菜单")
+from shortcutter import ShortCutter
+sc = ShortCutter()
+sc.create_desktop_shortcut("kdLaunchPad")
+sc.create_menu_shortcut("kdLaunchPad")

@@ -15,9 +15,8 @@ from kdLaunchPad.fileutil import get_file_realpath
 class sessionItem(QDialog):
     def __init__(self,last_path = None):
         super().__init__()
-        loadUi(get_file_realpath("sessionItem.ui"), self)
+        loadUi("sessionItem.ui", self)
         self.last_path = last_path
-        print("sessionItem init")
     
     @pyqtSlot()
     def on_pb_open_file_clicked(self):

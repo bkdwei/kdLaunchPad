@@ -5,22 +5,23 @@ Created on 2019年3月3日
 
 @author: bkd
 '''
-from PyQt5.uic import loadUi
 import os
 import sys
 import json
+import logging
 
+from PyQt5.uic import loadUi
 from PyQt5.Qt import QMainWindow
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QCursor, QIcon
 from PyQt5.QtWidgets import  QApplication, QFileDialog,  QGraphicsOpacityEffect, QAction, QMenu, QInputDialog, QLineEdit,QMessageBox
 
-from kdLaunchPad import kdconfigutil
-from kdLaunchPad import kdconfig
-from kdLaunchPad.launchSession import launchSession
-from kdLaunchPad.fileutil import  check_and_create,get_file_realpath
+from . import kdconfigutil
+from . import kdconfig
+from .launchSession import launchSession
+from .fileutil import  check_and_create,get_file_realpath
 
-
+log = logging.getLogger(__name__)
 class kdLaunchPad(QMainWindow):
 
     def __init__(self):

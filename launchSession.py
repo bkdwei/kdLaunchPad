@@ -5,15 +5,15 @@ Created on 2019年3月3日
 @author: bkd
 '''
 
-from PyQt5.uic import loadUi
 import sys
 import os
 
+from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot,Qt,QPoint,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QListView,QSizePolicy,QAction,QMenu,QInputDialog,QLineEdit
 from PyQt5.QtGui import QStandardItem,QStandardItemModel,QCursor
-from kdLaunchPad.sessionItem import sessionItem
-from kdLaunchPad.fileutil import get_file_realpath
+from .sessionItem import sessionItem
+from .fileutil import get_file_realpath
 
 
 class launchSession(QWidget):
