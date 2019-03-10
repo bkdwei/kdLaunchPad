@@ -1,0 +1,4 @@
+include kdLaunchPad/README.md
+include kdLaunchPad/LICENSE
+include kdLaunchPad/*.ui
+include kdLaunchPad/image/*

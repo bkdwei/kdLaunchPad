@@ -9,7 +9,7 @@ with open("kdLaunchPad/README.md", "r",encoding="utf-8") as fh:
 setup(
 #     固定部分
     name="kdLaunchPad",
-    version="1.0.2",
+    version="1.0.3",
     author="bkdwei",
     author_email="bkdwei@163.com",
     maintainer="韦坤东",
@@ -19,8 +19,9 @@ setup(
     url="https://github.com/bkdwei/kdLaunchPad",
     license="GPLv3+",
     platforms=["Windows", "Linux"],
+    setup_requires=["shortcutter"],
 #     需要安装的依赖
-    install_requires=["PyQt5","shortcutter"],
+    install_requires=["PyQt5",],
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
