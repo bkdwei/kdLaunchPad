@@ -1,4 +1,4 @@
-include kdLaunchPad/README.md
-include kdLaunchPad/LICENSE
+include LICENSE
+include main.py
 include kdLaunchPad/*.ui
 include kdLaunchPad/image/*

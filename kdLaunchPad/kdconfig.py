@@ -1,6 +1,6 @@
 import os
 
-config_file = os.path.join(os.path.expanduser('~') , ".config/kdLaunchPad/config.json")
+config_file = os.path.join(os.path.expanduser('~') , ".config/main/config.json")
 cmd =None
 name = None
 

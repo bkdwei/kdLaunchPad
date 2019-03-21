@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
-encoding/fileutil.py=utf-8
-encoding/kdLaunchPad.py=utf-8
-encoding/kdconfigutil.py=utf-8
-encoding/launchSession.py=utf-8
-encoding/sessionItem.py=utf-8
+encoding//kdLaunchPad/fileutil.py=utf-8
+encoding//kdLaunchPad/kdLaunchPad.py=utf-8
+encoding//kdLaunchPad/kdconfigutil.py=utf-8
+encoding//kdLaunchPad/launchSession.py=utf-8
+encoding//kdLaunchPad/sessionItem.py=utf-8
+encoding/main.py=utf-8
+encoding/setup.py=utf-8

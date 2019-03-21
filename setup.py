@@ -2,41 +2,52 @@
 #-*- coding:utf-8 -*-
 
 from setuptools import setup, find_packages
+from setuptools.command.install import install
+from os.path import expanduser,join
         
-with open("kdLaunchPad/README.md", "r",encoding="utf-8") as fh:
+with open("README.md", "r",encoding="utf-8") as fh:
     long_description = fh.read()
 
+# class install_cmd(install):
+#     def run(self):
+#         install.run(self)   
+#         print("开始创建菜单")
+#         with open(join(expanduser("~"), 'Desktop','kdLaunchPad.sh'),"w+") as f:
+#             f.write("#!/bin/sh\nkdLaunchPad")
+        
 setup(
 #     固定部分
     name="kdLaunchPad",
-    version="1.0.3",
+    version="1.0.4",
     author="bkdwei",
     author_email="bkdwei@163.com",
     maintainer="韦坤东",
     maintainer_email="bkdwei@163.com",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/bkdwei/kdLaunchPad",
+    url="https://github.com/bkdwei/main",
     license="GPLv3+",
-    platforms=["Windows", "Linux"],
+    platforms=["any"],
     setup_requires=["shortcutter"],
 #     需要安装的依赖
     install_requires=["PyQt5",],
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
+    python_requires='>=3.4',
 
 #     可变部分
     description="auto run some programs after system start",
-    keywords=("kdLaunchPad","autoStarter"),
+    keywords=("main","autoStarter"),
 #     package_data={"":["*","image/*"],},
 #     data_files=[('/usr/share/applications', ['data/kdLaunchPad.desktop'])],
+#    https://pypi.org/classifiers/
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: X11 Applications :: Qt",
-        "Intended Audience :: Developers",
+        "Intended Audience :: End Users/Desktop",
         "Natural Language :: Chinese (Simplified)",
-        "Topic :: Software Development :: Documentation",
+        "Topic :: System :: Boot :: Init",
         "Programming Language :: Python :: 3",
         " License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent",
@@ -45,14 +56,13 @@ setup(
     
      # 添加这个选项，在windows下Python目录的scripts下生成exe文件
      # 注意：模块与函数之间是冒号:
+     # 终端运行用console_scripts
     entry_points={
-        'console_scripts': [
+        'gui_scripts': [
             'kdLaunchPad=kdLaunchPad.kdLaunchPad:main'
         ],    
     }
+#     cmdclass={
+#         'install': install_cmd,
+#     }
 )
-print("正在使用shortcutter创建快捷方式和开始菜单")
-from shortcutter import ShortCutter
-sc = ShortCutter()
-sc.create_desktop_shortcut("kdLaunchPad")
-sc.create_menu_shortcut("kdLaunchPad")
