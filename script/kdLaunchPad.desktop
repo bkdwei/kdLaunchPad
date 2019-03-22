@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=false
+
+Name=kdLaunchPad
+Version=1.0.5
+Comment=auto run some programs after system start
+Comment[zh_CN]=定制的系统的自动启动程序
+Categories=System;
+Exec=kdLaunchPad
+Icon=kdLaunchPad

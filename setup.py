@@ -2,35 +2,28 @@
 #-*- coding:utf-8 -*-
 
 from setuptools import setup, find_packages
-from setuptools.command.install import install
-from os.path import expanduser,join
+from install_script import install_cmd 
         
 with open("README.md", "r",encoding="utf-8") as fh:
     long_description = fh.read()
 
-# class install_cmd(install):
-#     def run(self):
-#         install.run(self)   
-#         print("开始创建菜单")
-#         with open(join(expanduser("~"), 'Desktop','kdLaunchPad.sh'),"w+") as f:
-#             f.write("#!/bin/sh\nkdLaunchPad")
         
 setup(
 #     固定部分
     name="kdLaunchPad",
-    version="1.0.4",
+    version="1.0.5",
     author="bkdwei",
     author_email="bkdwei@163.com",
     maintainer="韦坤东",
     maintainer_email="bkdwei@163.com",
     long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/bkdwei/main",
+#     long_description_content_type="text/markdown",
+    url="https://github.com/bkdwei/kdLaunchPad",
     license="GPLv3+",
     platforms=["any"],
-    setup_requires=["shortcutter"],
+    
 #     需要安装的依赖
-    install_requires=["PyQt5",],
+    install_requires=["PyQt5"],
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
@@ -38,9 +31,7 @@ setup(
 
 #     可变部分
     description="auto run some programs after system start",
-    keywords=("main","autoStarter"),
-#     package_data={"":["*","image/*"],},
-#     data_files=[('/usr/share/applications', ['data/kdLaunchPad.desktop'])],
+    keywords=("kdLaunchPad","autoStarter"),
 #    https://pypi.org/classifiers/
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -61,8 +52,8 @@ setup(
         'gui_scripts': [
             'kdLaunchPad=kdLaunchPad.kdLaunchPad:main'
         ],    
+    },
+    cmdclass={
+        'install': install_cmd,
     }
-#     cmdclass={
-#         'install': install_cmd,
-#     }
 )

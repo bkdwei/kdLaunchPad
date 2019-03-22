@@ -27,7 +27,7 @@ class kdLaunchPad(QMainWindow):
         super().__init__()
         print(os.path.realpath(__file__))
         loadUi(get_file_realpath("kdLaunchPad.ui"), self)
-        self.setWindowIcon(QIcon(get_file_realpath('image/logo.ico')))
+        self.setWindowIcon(QIcon(get_file_realpath('image/kdLaunchPad.ico')))
         
         self.confs = kdconfigutil.init_conf()
         print(self.confs)
