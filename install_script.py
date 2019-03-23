@@ -8,12 +8,12 @@ class install_cmd(install):
         install.run(self)
         try :
             if sys.platform =="win32" :
-                    script_file =  os.path.join(self._get_desktop_folder(),'kdLaunchPad.bat')
+                    script_file =  os.path.join(self._get_desktop_folder(),project_name + '.bat')
                     with open(script_file, "w") as f:
                         f.write("@echo off\r\nstart " + project_name)
             elif sys.platform == "linux":
                     import stat
-                    script_file =  os.path.join(self._get_desktop_folder(),'kdLaunchPad.sh')
+                    script_file =  os.path.join(self._get_desktop_folder(),project_name + '.sh')
                     with open(script_file, "w") as f:
                         f.write("#!/bin/sh\n" + project_name)
                         st = os.stat(script_file)
