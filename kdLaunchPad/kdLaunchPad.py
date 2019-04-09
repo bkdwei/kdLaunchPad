@@ -19,6 +19,7 @@ from . import kdconfigutil
 from . import kdconfig
 from .launchSession import launchSession
 from .fileutil import  check_and_create,get_file_realpath
+from .exception_handler import global_exception_hander
 
 log = logging.getLogger(__name__)
 class kdLaunchPad(QMainWindow):
@@ -28,6 +29,9 @@ class kdLaunchPad(QMainWindow):
         print(os.path.realpath(__file__))
         loadUi(get_file_realpath("kdLaunchPad.ui"), self)
         self.setWindowIcon(QIcon(get_file_realpath('image/kdLaunchPad.ico')))
+        
+        self.exception_handler = global_exception_hander()
+        self.exception_handler.patch_excepthook()
         
         self.confs = kdconfigutil.init_conf()
         print(self.confs)
